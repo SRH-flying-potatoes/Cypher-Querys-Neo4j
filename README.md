@@ -32,11 +32,7 @@ SET a.id = row.id,
     
     a.city = row.city,
     
-    a.descr = row.descr,
-    
-    a.longest = toInteger(row.longest),
-    
-    a.altitude = toInteger(row.altitude);
+    a.descr = row.name;
 
 **// STEP 3: Loading Airport routes data from CSV file and creating the Airport Routes graph**
 
@@ -47,7 +43,9 @@ MATCH (source:Airport {iata: row.source})
 MATCH (target:Airport {iata: row.destination})
 
 MERGE (source)-[route:HAS_ROUTE]->(target)
-ON CREATE SET route.distance = toInteger(row.distance);
+ON CREATE SET 
+
+    route.distance = toInteger(row.distance);
 
 **// STEP 4: Projecting the graph for shortest path calculation**
 
